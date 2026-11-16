@@ -1433,6 +1433,18 @@
     const t = parseInt(String(id).slice(1, -6), 36);
     return isFinite(t) && t < BAN_ATE;
   }
+  // 🎁 PRESENTES do Thiago: caem uma vez só na conta do código (quando ela abrir o jogo); não contam no ranking
+  const PRESENTES = [
+    { id: 'trilhao-luiza-2026-11-16', codigo: 'jkiz4', moedas: 1e12, moedasPorPersonagem: 1e12, nutellas: 1e12,
+      aviso: '🎁 Presente do Thiago: 1 trilhão de moedas para cada personagem e 1 trilhão de Nutellas!' },
+  ];
+  function codigoBate(acct, codigo) {
+    const c = String(acct || '').slice(-6).toLowerCase(), q = String(codigo || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!q) return false;
+    if (c === q) return true;
+    if (q.length === 5) for (let i = 0; i < 6; i++) if (c.slice(0, i) + c.slice(i + 1) === q) return true;   // faltou uma letra no código
+    return false;
+  }
   // linhas antigas do ranking: some quem foi banido e os nomes antigos da miguel super (fica só "miguel super")
   function linhaBanida(r) {
     if (!r) return true;
@@ -12436,6 +12448,29 @@
       let busy = false;
       const showMyCode = () => { codeEl.textContent = RankStore.codeOf(accountId(1)); RankStore.registerCode(); };
       const closeForm = () => { codeForm.hidden = true; enterBtn.hidden = false; codeInput.value = ''; };
+      // 🎁 presentes do Thiago para esta conta (uma vez só; só com o banco ligado)
+      async function darPresentes() {
+        const acct = accountId(1);
+        const mine = PRESENTES.filter((p) => codigoBate(acct, p.codigo));
+        if (!mine.length || contaBanida(acct) || !(await RankStore.db())) return;
+        for (const p of mine) {
+          let dado = false;
+          await RankStore._change(1, (a) => {
+            a.presentes = Object.assign({}, a.presentes || {});
+            if (a.presentes[p.id]) return a;
+            a.presentes[p.id] = Date.now();
+            a.coins = (a.coins || 0) + (p.moedas || 0);
+            a.nutellas = (a.nutellas || 0) + (p.nutellas || 0);
+            if (p.moedasPorPersonagem) {
+              a.charCoins = Object.assign({}, a.charCoins || {});
+              for (const k of Object.keys(CHARACTER_CONFIGS)) a.charCoins[k] = (a.charCoins[k] || 0) + p.moedasPorPersonagem;
+            }
+            dado = true;
+            return a;
+          });
+          if (dado && accountId(1) === acct) codeMsg.textContent = p.aviso;
+        }
+      }
       // 🔒 abriu o jogo: já entra sozinho na conta salva no login do Claude (sem digitar nada)
       async function autoEnter() {
         const link = await AcctLink.load();
@@ -12471,7 +12506,7 @@
         let shown = false;
         const firstShow = () => { if (!shown) { shown = true; showMyCode(); } };
         setTimeout(firstShow, 3000);                // no máximo 3 s esperando o login
-        autoEnter().catch(() => {}).then(() => { firstShow(); if (acctBanida[1] && acctFresh[1] && !codeMsg.textContent) codeMsg.textContent = '🆕 A conta antiga deste aparelho foi apagada. Escolha seu nome e comece de novo!'; });
+        autoEnter().catch(() => {}).then(() => { firstShow(); if (acctBanida[1] && acctFresh[1] && !codeMsg.textContent) codeMsg.textContent = '🆕 A conta antiga deste aparelho foi apagada. Escolha seu nome e comece de novo!'; darPresentes().catch(() => {}); });
       }
       enterBtn.addEventListener('click', () => { codeForm.hidden = false; enterBtn.hidden = true; codeMsg.textContent = ''; codeInput.focus(); });
       document.getElementById('acct-code-cancel').addEventListener('click', () => { closeForm(); codeMsg.textContent = ''; });
@@ -12498,6 +12533,7 @@
           loadSpeedMax();
           RankStore.publishMe();
           const saving = AcctLink.remember(r.acct);   // 🔒 fica salva no login: da próxima vez já abre nela
+          darPresentes().catch(() => {});
           codeMsg.textContent = `✅ Pronto! Agora você está na conta ${name || 'desse código'}, com tudo que ela tem 🎉` + (oldSaved ? ` (para voltar à conta de antes, use o código ${oldCode})` : '');
           await saving;
         } catch (e) {
