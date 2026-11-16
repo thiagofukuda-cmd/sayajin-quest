@@ -5280,11 +5280,7 @@
       this._buildMusicButton();
       if (this.pvp) this._startPvpRound(performance.now() / 1000, true);
       { const d = new Date(); if (d.getFullYear() === 2026 && d.getMonth() === 10 && d.getDate() === 14 && this.mode !== 'client') RankStore.markAdmin14(1); }
-      if (!this.pvp) setTimeout(async () => {
-        let tm = readStorage(TEAM_KEY);
-        if (tm === 'super') { const acc = (await RankStore.getAccount(1)) || {}; if (!((acc.superPaisUntil || 0) > Date.now())) tm = 'br'; }
-        if (tm === 'br' || tm === 'jp' || tm === 'super') this._setFlagTeam(tm); else this._askFlagTeam();
-      }, 900);
+      if (!this.pvp) setTimeout(() => this._startFlagTeam(), 900);
 
       ChiptuneEngineOrNoop(this.audio);
       this._playStageMusic();
@@ -6010,6 +6006,7 @@
         const inB = (b) => p.x >= b.x && p.x <= b.x + b.w && p.y >= b.y && p.y <= b.y + b.h;
         if (inB(this._pvpAgainBounds)) { this._pvpMatchOver = null; this.pvpScore = [0, 0]; this._startPvpRound(now, false); return; }
         if (inB(this._pvpHomeBounds)) { try { this.audio.stopMusic(); } catch (e) { /* ok */ } location.reload(); return; }
+        if (this._pvpHotelBounds && inB(this._pvpHotelBounds)) { this._pvpToHotel(now); return; }
         return;
       }
       if (this.roulette && this._rouletteCloseBounds) {
@@ -6717,6 +6714,32 @@
       this.nutellasGot = (this.nutellasGot || 0) + 8;
       setTimeout(() => this._showBanner('🍫 Bem-vindos ao Hotel: +8 Nutellas!', '#C9853A'), 2500);
       try { this._playStageMusic(); } catch (e) { /* sem som */ }
+    }
+
+    // ⚔️➡️🏨 venceu o PVP: os dois vão juntos para o Hotel (jogo normal) e lutam contra os gigantes
+    _pvpToHotel(now) {
+      if (this.mode === 'client') return;
+      this._pvpMatchOver = null; this._pvpOverAt = null; this._pvpHotelBounds = null;
+      this.pvp = false;
+      this.pvpScore = [0, 0];
+      this.roulette = null; this._acting = null;
+      this.projectiles = []; this.pendingFlyHits = [];
+      for (const c of [this.miguel, this.tiago]) {
+        const cfg = Object.assign({}, c.config); delete cfg.attackRange; c.config = cfg;   // tira o alcance do PVP
+        c.pvpGift = null; c.sleighUntil = -1; c.levelFlyUntil = -1; c.levelCdUntil = -1;
+      }
+      this.isGameComplete = false;
+      this._goToStage(HOTEL_STAGE_INDEX, '🏨 HOTEL! Agora é todo mundo junto: derrotem os 2 gigantes (vocês têm 600 de vida)');
+      for (const c of [this.miguel, this.tiago]) { c.health = c.maxHealth; c.immuneTimer = 3; }
+      try { this._playStageMusic(); } catch (e) { /* sem som */ }
+      setTimeout(() => this._startFlagTeam(), 900);   // time do país, como numa partida normal
+    }
+
+    // 🇧🇷 🇯🇵 time do país da partida: o último escolhido (ou pergunta)
+    async _startFlagTeam() {
+      let tm = readStorage(TEAM_KEY);
+      if (tm === 'super') { const acc = (await RankStore.getAccount(1)) || {}; if (!((acc.superPaisUntil || 0) > Date.now())) tm = 'br'; }
+      if (tm === 'br' || tm === 'jp' || tm === 'super') this._setFlagTeam(tm); else this._askFlagTeam();
     }
 
     // 🛎️ continuar no hotel (sem chefe): recepção, piscina, árvore e avião
@@ -9327,6 +9350,12 @@
       ctx.font = 'bold 18px -apple-system, "Segoe UI", sans-serif'; ctx.fillStyle = '#FFFFFF'; ctx.lineWidth = 0;
       ctx.fillText('⚔️ JOGAR DE NOVO', bx + bw / 2, by + bh / 2);
       ctx.fillText('🏠 TELA DE INÍCIO', bx + bw + gap + bw / 2, by + bh / 2);
+      // 🏨 ir pro hotel: jogo normal, os dois juntos contra os gigantes
+      const hw = bw * 2 + gap, hy = by + bh + gap;
+      this._pvpHotelBounds = { x: bx, y: hy, w: hw, h: bh };
+      drawRoundedRectLocal(ctx, bx + hw / 2, hy + bh / 2, hw, bh, 16, 0, 'rgba(168,50,58,0.95)', '#FFD933', 3);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillText('🏨 IR PRO HOTEL', bx + hw / 2, hy + bh / 2);
       ctx.restore();
     }
 
