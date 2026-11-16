@@ -1,0 +1,66 @@
+{"origem": "Sayajin Quest no Claude, 15/11/2026",
+"colecoes": {
+"carteiras": {
+"amvuvlmjukgpslo": {"bestTime":292,"candyShop":{"forca2_miguel":0,"forca3":0,"moedas5":0,"sorte3":0,"vel10":0,"vel2":0,"vel5":0},"charCoins":{"ester":450,"gabriel":400,"guilherme":1100,"jamires":450,"kai":150,"luiza":29300,"miguel":27450,"mijade":50,"paulo":97400,"pipo":107950,"tiago":9300},"charItems":{"gabriel":{"l":1,"until":1794745367902},"guilherme":{"l":1,"until":1795209632680},"jamires":{"l":1,"until":1794745354681},"kai":{"l":1,"ls":[1795386936533],"until":1795386936533},"luiza":{"l":2,"ls":[1794692976122,1797248007204],"until":1797248007204},"miguel":{"l":2,"until":1795024584728},"paulo":{"l":2,"ls":[1795387034594,1795387037507],"until":1795387037507},"pipo":{"l":2,"ls":[1795387039345,1795387173567],"until":1795387173567},"tiago":{"l":2,"until":1795209312619}},"charLevels":{"ester":{"l":1,"until":1794685455801},"gabriel":{"l":4,"ls":[1794745365355,1797248058669,1797248061549,1797248063082],"until":1797248063082},"guilherme":{"l":1,"ls":[1797237679918],"until":1797237679918},"jamires":{"l":1,"until":1794745351791},"kai":{"l":1,"until":1794692912848},"luiza":{"l":15,"ls":[1797247812179,1797247814713,1797247816055,1797247817541,1797247819097,1797247820595,1797247821979,1797247823374,1797247824820,1797247826129,1797247827545,1797247828917,1797247830312,1797247831703,1795386964554],"until":1797247831703},"miguel":{"l":5,"ls":[1797248034600,1797248075470,1797248076793,1797248078093,1797248079326],"until":1797248079326},"mijade":{"l":3,"until":1795088724310},"paulo":{"l":5,"ls":[1797248040252,1797248043259,1797248044662,1797248045951,1797248047203],"until":1797248047203},"pipo":{"l":5,"ls":[1797248050369,1797248051604,1797248052818,1797248053973,1797248055151],"until":1797248055151},"tiago":{"l":5,"ls":[1795125922487,1797248035830,1797248069219,1797248070518,1797248071837],"until":1797248071837}},"charNutella":{"guilherme":1794884400000,"luiza":1794884400000,"miguel":1795088720468,"paulo":1795088038880,"pipo":1795088712453,"tiago":1795125923971},"coins":184650,"coinsByChar":{"Gabriel":5000,"Guilherme":1600,"Jamile":3450,"João":156700,"Kai":4150,"Luiza":650,"Miguel":44900,"Mijade":4900},"dayBuys":{"d":"Thu Nov 12 2026","items":["poder5","vel5m","sorte2","sorte","vel","moedas"]},"doces":57100,"earned":4350,"gfx2":true,"hotelKey":true,"maxSpeed":20,"name":"miguel super","nutShop":{"conj50":0,"nforca3":0,"nsorte5":0,"nut2x":0,"nvel2":0,"nvel3":0,"nvida5":0},"nutellas":150,"pauloLevel":3,"pauloUntil":1794507192883,"power5Until":1794946840217,"shop":{"forca":0,"moedas":0,"sorte":0,"sorte2":0,"vel":0,"vel5m":0},"superPaisUntil":1795125069015,"trophies":20,"updatedAt":1794782760232,"winDay":"Sat Nov 14 2026"},
+"amw686ceead6vg6": {"candyShop":{},"charCoins":{"miguel":100,"tiago":100},"coins":100,"coinsByChar":{"Miguel":100},"doces":0,"shop":{},"updatedAt":1794045207048},
+"amw8ebh31jvknqn": {"candyShop":{},"shop":{},"updatedAt":1794176447854},
+"amwe5w3mndz27i6": {"candyShop":{},"nutShop":{},"shop":{},"updatedAt":1794525092604},
+"amwiackjyow4oja": {"name":"KGPSLO","updatedAt":1794775482266},
+"amwif27sdi9idxy": {"name":"Luiza","updatedAt":1794782345254},
+"amwif93077fecs7": {"name":"Luiza","updatedAt":1794784758123},
+"amwifadeqwefox5": {"name":"Luiza","updatedAt":1794782722538},
+"amwigia4sftgx7l": {"name":"Luiza","updatedAt":1794785011162}
+},
+"ranking3": {
+"amvuvlmjukgpslo~joao-e-paulo": {"acct":"amvuvlmjukgpslo","bestTime":292,"byChar":{"João":4350},"doces":9800,"earned":4350,"name":"João e Paulo","trophies":1,"updatedAt":1793916810967},
+"amvuvlmjukgpslo~miguel-e-thiago": {"acct":"amvuvlmjukgpslo","bestTime":79,"byChar":{"Miguel":4850},"doces":3200,"docesByChar":{"Miguel":3200},"earned":4850,"name":"miguel e thiago","nutellas":4,"nutellasByChar":{"Miguel":4},"recWinReal":true,"trophies":1,"trophiesByChar":{"Miguel":1},"updatedAt":1794521079466},
+"amvuvlmjukgpslo~miguel-luiza": {"acct":"amvuvlmjukgpslo","byChar":{"Kai":100},"doces":0,"docesByChar":{},"earned":100,"name":"miguel luiza","updatedAt":1794047098341},
+"amvuvlmjukgpslo~miguel-super": {"acct":"amvuvlmjukgpslo","bestTime":74,"byChar":{"Gabriel":4500,"Guilherme":1600,"Jamile":3450,"João":90650,"Kai":4050,"Miguel":40000,"Mijade":4900},"doces":34600,"docesByChar":{"Gabriel":3200,"Jamile":200,"João":16000,"Kai":3200,"Miguel":8600,"Mijade":3400},"earned":149150,"name":"miguel super","nutellas":183,"nutellasByChar":{"Gabriel":4,"Miguel":179},"recAdmin14":true,"recWinReal":true,"trophies":12,"trophiesByChar":{"Gabriel":1,"João":4,"Kai":1,"Miguel":4,"Mijade":1},"updatedAt":1794782439243},
+"amvuvlmjukgpslo~paulo-e-joao": {"acct":"amvuvlmjukgpslo","bestTime":77,"byChar":{"Gabriel":500,"João":61300,"Luiza":650},"doces":16600,"docesByChar":{"João":16600},"earned":62450,"name":"Paulo e Joao","nutellas":6,"nutellasByChar":{"João":6},"recSuperPais":true,"recWinReal":true,"trophies":7,"trophiesByChar":{"João":7},"updatedAt":1794520269789},
+"amw686ceead6vg6~sem-nome": {"acct":"amw686ceead6vg6","byChar":{"Miguel":100},"doces":0,"docesByChar":{},"earned":100,"name":"","updatedAt":1794045207688}
+},
+"tempos": {
+"amvuvlmjukgpslo~1793916810967": {"acct":"amvuvlmjukgpslo","at":1793916810967,"bestTime":292,"char":"João","name":"João e Paulo"},
+"amvuvlmjukgpslo~1793989671468": {"acct":"amvuvlmjukgpslo","at":1793989671468,"bestTime":230,"char":"","name":"miguel super"},
+"amvuvlmjukgpslo~1794008883499": {"acct":"amvuvlmjukgpslo","at":1794008883499,"bestTime":313,"char":"Miguel","name":"miguel super"},
+"amvuvlmjukgpslo~1794087565143": {"acct":"amvuvlmjukgpslo","at":1794087565143,"bestTime":188,"char":"Kai","name":"miguel super"},
+"amvuvlmjukgpslo~1794141065191": {"acct":"amvuvlmjukgpslo","at":1794141065191,"bestTime":101,"char":"Mijade","name":"miguel super"},
+"amvuvlmjukgpslo~1794141511333": {"acct":"amvuvlmjukgpslo","at":1794141511333,"bestTime":159,"char":"João","name":"miguel super"},
+"amvuvlmjukgpslo~1794420130803": {"acct":"amvuvlmjukgpslo","at":1794420130803,"bestTime":341,"char":"João","name":"miguel super"},
+"amvuvlmjukgpslo~1794420284495": {"acct":"amvuvlmjukgpslo","at":1794420284495,"bestTime":104,"char":"João","name":"miguel super"},
+"amvuvlmjukgpslo~1794420473370": {"acct":"amvuvlmjukgpslo","at":1794420473370,"bestTime":94,"char":"João","name":"paulo e joão"},
+"amvuvlmjukgpslo~1794420617139": {"acct":"amvuvlmjukgpslo","at":1794420617139,"bestTime":82,"char":"João","name":"paulo e joão"},
+"amvuvlmjukgpslo~1794485844041": {"acct":"amvuvlmjukgpslo","at":1794485844041,"bestTime":118,"char":"João","name":"Paulo e Joao"},
+"amvuvlmjukgpslo~1794486021494": {"acct":"amvuvlmjukgpslo","at":1794486021494,"bestTime":134,"char":"João","name":"Paulo e Joao"},
+"amvuvlmjukgpslo~1794486337438": {"acct":"amvuvlmjukgpslo","at":1794486337438,"bestTime":103,"char":"João","name":"Paulo e Joao"},
+"amvuvlmjukgpslo~1794486781349": {"acct":"amvuvlmjukgpslo","at":1794486781349,"bestTime":77,"char":"João","name":"Paulo e Joao"},
+"amvuvlmjukgpslo~1794506740729": {"acct":"amvuvlmjukgpslo","at":1794506740729,"bestTime":195,"char":"João","name":"Paulo e Joao"},
+"amvuvlmjukgpslo~1794521044046": {"acct":"amvuvlmjukgpslo","at":1794521044046,"bestTime":79,"char":"Miguel","name":"miguel e thiago"},
+"amvuvlmjukgpslo~1794524392389": {"acct":"amvuvlmjukgpslo","at":1794524392389,"bestTime":74,"char":"Miguel","name":"miguel super"},
+"amvuvlmjukgpslo~1794604988669": {"acct":"amvuvlmjukgpslo","at":1794604988669,"bestTime":141,"char":"Gabriel","name":"miguel super"},
+"amvuvlmjukgpslo~1794646125012": {"acct":"amvuvlmjukgpslo","at":1794646125012,"bestTime":106,"char":"Miguel","name":"miguel super"}
+},
+"codigos": {
+"ftgx7l": {"acct":"amwigia4sftgx7l","at":1794784948421},
+"kgpslo": {"acct":"amvuvlmjukgpslo","at":1794775774352},
+"ow4oja": {"acct":"amwiackjyow4oja","at":1794775680085}
+},
+"jogadores": {
+"amvuvlmjukgpslo": {"acct":"amvuvlmjukgpslo","name":"miguel super","seen":1794782760825},
+"amwiackjyow4oja": {"acct":"amwiackjyow4oja","name":"KGPSLO","seen":1794775679827},
+"amwif27sdi9idxy": {"acct":"amwif27sdi9idxy","name":"Luiza","seen":1794782345899},
+"amwif93077fecs7": {"acct":"amwif93077fecs7","name":"Luiza","seen":1794784758725},
+"amwifadeqwefox5": {"acct":"amwifadeqwefox5","name":"Luiza","seen":1794782723135},
+"amwigia4sftgx7l": {"acct":"amwigia4sftgx7l","name":"Luiza","seen":1794786057269}
+},
+"gastos": {
+"amvuvlmjukgpslo": {"acct":"amvuvlmjukgpslo","coins":335250,"doces":7100,"name":"miguel super","updatedAt":1794782374316}
+},
+"ranking2": {
+"amvuvlmjukgpslo": {"bestTime":292,"candyShop":{"forca2_miguel":1,"forca3":1,"moedas5":1,"sorte3":1,"vel10":1,"vel2":1},"coins":0,"coinsByChar":{"João":4350},"doces":9800,"earned":4350,"name":"miguel super","pauloLevel":3,"pauloUntil":1794507192883,"shop":{"forca":0,"moedas":1,"sorte":2},"trophies":1,"updatedAt":1793916810967}
+},
+"accounts": {
+"amvuvlmjukgpslo": {"bestTime":475,"coins":50600,"coinsByChar":{"Ester":2050,"Guilherme":100,"João":46000,"Kai":1800,"Miguel":2100,"Paulo":800},"doces":103200,"name":"João meireles","pauloLevel":1,"shop":{"forca":2,"moedas":1},"trophies":1,"updatedAt":1793834438459},
+"amvuvln11a91465": {"bestTime":475,"coins":52950,"coinsByChar":{"João":200,"Luiza":500,"Miguel":600,"Paulo":51550},"doces":103200,"name":"paulo neto","trophies":1,"updatedAt":1793834212235}
+}
+}}
