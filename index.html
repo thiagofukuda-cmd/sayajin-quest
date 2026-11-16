@@ -1424,12 +1424,29 @@
   // Cada jogador (Jogador 1 / Jogador 2 deste aparelho) tem uma conta própria que vai somando tudo
   const acctMemory = {};   // se o aparelho não deixar salvar, a conta fica lembrada enquanto a página estiver aberta
   const acctFresh = {};    // a conta acabou de ser criada porque o aparelho não lembrava de nenhuma
+  // 🚫 contas banidas: todas as criadas até 16/11/2026 (10h58), menos a miguel super. Conta nova joga normal.
+  const BAN_ATE = 1794837480000;
+  const CONTA_LIVRE = 'amvuvlmjukgpslo';   // miguel super
+  const acctBanida = {};   // a conta que este aparelho lembrava foi banida
+  function contaBanida(id) {
+    if (!id || id === CONTA_LIVRE || !/^a[0-9a-z]{9,}$/.test(id)) return false;
+    const t = parseInt(String(id).slice(1, -6), 36);
+    return isFinite(t) && t < BAN_ATE;
+  }
+  // linhas antigas do ranking: some quem foi banido e os nomes antigos da miguel super (fica só "miguel super")
+  function linhaBanida(r) {
+    if (!r) return true;
+    if (contaBanida(r.acct)) return true;
+    return r.acct === CONTA_LIVRE && (r.updatedAt || r.at || 0) < BAN_ATE && nameSlug(r.name || '') !== 'miguel-super';
+  }
   function accountId(slot) {
     const k = 'sayajinQuest_acct_' + slot;
     let id = readStorage(k) || acctMemory[slot];
+    if (id && id !== acctMemory[slot] && contaBanida(id) && readStorage(k + '_ok') !== id) { id = null; acctBanida[slot] = true; }   // 🚫 conta banida: começa uma nova
     if (!id) {
       id = 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       writeStorage(k, id);
+      writeStorage(k + '_ok', id);
       acctFresh[slot] = true;
     }
     acctMemory[slot] = id;
@@ -1442,6 +1459,7 @@
     acctMemory[slot] = id;
     acctFresh[slot] = false;
     writeStorage('sayajinQuest_acct_' + slot, id);
+    writeStorage('sayajinQuest_acct_' + slot + '_ok', id);
   }
   const SHOP_ITEMS = [
     { k: 'forca', e: '💪', n: 'Super força x3', d: 'Seu ataque bate 3 vezes mais forte por 10 minutos (começa na próxima partida)', price: 100 },
@@ -1949,14 +1967,14 @@
       const db = await this.db(); if (!db) return [];
       const me = accountId(1), qq = nameSlug(q);
       const rows = (await db.collection('jogadores').orderBy('seen', 'desc').limit(500).get()).docs.map((d) => d.data());
-      return rows.filter((r) => r.acct !== me && r.name && nameSlug(r.name).includes(qq)).slice(0, 20);
+      return rows.filter((r) => r.acct !== me && r.name && !contaBanida(r.acct) && nameSlug(r.name).includes(qq)).slice(0, 20);
     },
     _pairId(a, b) { return a < b ? a + '~' + b : b + '~' + a; },
     async friendData() {
       const db = await this.db(); if (!db) return null;
       const me = accountId(1);
       const all = (await db.collection('amizades').orderBy('at', 'desc').limit(1000).get()).docs.map((d) => d.data());
-      const mine = all.filter((f) => f.a === me || f.b === me).map((f) => {
+      const mine = all.filter((f) => (f.a === me || f.b === me) && !contaBanida(f.a === me ? f.b : f.a)).map((f) => {
         const other = f.a === me ? { id: f.b, name: f.bName } : { id: f.a, name: f.aName };
         return Object.assign({}, f, { other, sentByMe: f.from === me });
       });
@@ -2011,7 +2029,7 @@
         return () => { stop = true; if (timer) clearTimeout(timer); };
       }
       const [field, dir] = RANK_FIELDS[kind] || RANK_FIELDS.coins;
-      const keep = (a) => (a[field] || 0) > 0;
+      const keep = (a) => (a[field] || 0) > 0 && !linhaBanida(a);
       let stop = false, unsub = null, timer = null;
       const poll = async () => {
         if (stop) return;
@@ -2083,7 +2101,7 @@
       let acct = null;
       try { const s = await db.collection(CODES_COL).doc(code).get(); if (s.exists) acct = (s.data() || {}).acct || null; } catch (e) { /* tenta a conta inteira */ }
       if (!acct && code.length >= 10) acct = code;
-      if (!acct) return {};
+      if (!acct || contaBanida(acct)) return {};
       try {
         const r = await this._loadWallet(db, acct);
         if (r.fresh && !r.legacy && !Object.keys(r.wallet || {}).length) return {};
@@ -2105,6 +2123,7 @@
       if (db) { try { runs = (await db.collection(TIMES_COL).orderBy('bestTime', 'asc').limit(300).get()).docs.map((d) => d.data()); } catch (e) { runs = []; } }
       else runs = Object.values(readJSON(RUNS_LOCAL_KEY, {})).sort((a, b) => a.bestTime - b.bestTime);
       void bestRun;
+      rows = rows.filter((r) => !linhaBanida(r)); runs = runs.filter((r) => !linhaBanida(r));
       const topBy = (f) => rows.filter((r) => (r[f] || 0) > 0).sort((a, b) => b[f] - a[f]).slice(0, 100);
       const seen = new Set(), timeTop = [];
       for (const r of runs) { const n = r.name || ''; if (!n || seen.has(n) || !(r.bestTime > 0)) continue; seen.add(n); timeTop.push(r); if (timeTop.length >= 100) break; }
@@ -2145,7 +2164,7 @@
     },
     async top(kind) {
       const [field, dir] = RANK_FIELDS[kind] || RANK_FIELDS.coins;
-      const keep = (a) => (a[field] || 0) > 0;
+      const keep = (a) => (a[field] || 0) > 0 && !linhaBanida(a);
       const db = await this.db();
       if (db) {
         try {
@@ -2177,6 +2196,7 @@
             const ref = db.collection('data/users/' + uid).doc(ACCT_LINK_DOC);
             const snap = await ref.get();
             this.acct = snap.exists ? ((snap.data() || {}).acct || null) : null;
+            if (contaBanida(this.acct)) this.acct = null;
             this._ref = ref;
             this.ok = true;
           }
@@ -12451,7 +12471,7 @@
         let shown = false;
         const firstShow = () => { if (!shown) { shown = true; showMyCode(); } };
         setTimeout(firstShow, 3000);                // no máximo 3 s esperando o login
-        autoEnter().catch(() => {}).then(firstShow);
+        autoEnter().catch(() => {}).then(() => { firstShow(); if (acctBanida[1] && acctFresh[1] && !codeMsg.textContent) codeMsg.textContent = '🆕 A conta antiga deste aparelho foi apagada. Escolha seu nome e comece de novo!'; });
       }
       enterBtn.addEventListener('click', () => { codeForm.hidden = false; enterBtn.hidden = true; codeMsg.textContent = ''; codeInput.focus(); });
       document.getElementById('acct-code-cancel').addEventListener('click', () => { closeForm(); codeMsg.textContent = ''; });
